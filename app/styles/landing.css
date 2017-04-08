@@ -36,16 +36,12 @@ body.landing {
 .point {
     position: relative;
     padding: 2rem;
-    text-align: center opacity: 0;
+    text-align: center;
+    opacity: 1;
     -webkit-transform: scaleX(0.5) translateY(3rem);
     -moz-transform: scaleX(0.50) translateY(3rem);
     transform: scaleX(0.9) translateY(3rem);
-    -webkit-transition: all 3s ease-in-out;
-    -moz-transition: all 3s ease-in-out;
-    transition: all 3s ease-in-out;
-    -webkit-transition-delay: 0.75s;
-    -moz-transition-delay: 0.75s;
-    transition-delay: 0.75s;
+
 }
 
 .point .point-title {
