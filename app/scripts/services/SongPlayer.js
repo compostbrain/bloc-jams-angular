@@ -51,9 +51,9 @@
          * @param {Object} song
          */
         var stopSong = function (song) {
-
+            //song = song || SongPlayer.currentSong;
             currentBuzzObject.stop();
-            song.playing = null;
+            song.playing = false;
         };
 
         var getSongIndex = function (song) {
@@ -68,16 +68,19 @@
          */
 
         SongPlayer.play = function (song) {
+            if (SongPlayer.currentSong) {
+                stopSong(SongPlayer.currentSong);
+            }
             song = song || SongPlayer.currentSong;
             if (SongPlayer.currentSong !== song) {
                 setSong(song);
-                console.log (song.playing);
+                console.log ("song.playing, after setSong " + JSON.stringify(song));
                 playSong(song);
-                console.log (song.playing);
+                console.log ("song.playing, after playSong " + JSON.stringify(song));
             } else if (SongPlayer.currentSong === song) {
                 if (currentBuzzObject.isPaused()) {
                     playSong(song);
-                    console.log (song.playing);
+                    console.log ("song.playing, after playSong " + JSON.stringify(song));
                 }
             }
         };
@@ -89,8 +92,10 @@
          */
         SongPlayer.pause = function (song) {
             song = song || SongPlayer.currentSong;
-            currentBuzzObject.pause();
-            song.playing = null;
+            stopSong(song);
+            
+//            currentBuzzObject.pause();
+//            song.playing = null;
         };
 
         /**
@@ -98,6 +103,9 @@
          *@desc moves to previous song
          */
         SongPlayer.previous = function () {
+            if (SongPlayer.currentSong) {
+                stopSong(SongPlayer.currentSong);
+            }
 
             var currentSongIndex = getSongIndex(SongPlayer.currentSong);
             currentSongIndex--;
@@ -111,6 +119,9 @@
         };
 
         SongPlayer.next = function () {
+            if (SongPlayer.currentSong) {
+                stopSong(SongPlayer.currentSong);
+            }
             var currentSongIndex = getSongIndex(SongPlayer.currentSong);
             currentSongIndex++;
             if (currentSongIndex > currentAlbum.songs.length) {
