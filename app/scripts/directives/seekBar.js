@@ -33,6 +33,16 @@
                          width: percentString()
                      };
                  };
+                /** manipulates the style of .thumb
+                * so that the thumb position matches
+                *the fillStyle
+                */
+                scope.thumbStyle = function() {
+                  return {
+                    left: percentString()
+                  };
+              };
+
 
                  scope.onClickSeekBar = function(event) {
                      var percent = calculatePercent(seekBar, event);
