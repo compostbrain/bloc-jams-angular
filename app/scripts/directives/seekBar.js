@@ -78,7 +78,7 @@
          var notifyOnChange = function(newValue) {
            if (typeof scope.onChange === 'function') {
              scope.onChange({
-               value: newValue
+               valu: newValue
              });
            }
          };

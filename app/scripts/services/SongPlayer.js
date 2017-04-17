@@ -19,7 +19,7 @@
      * @type {Object}
      */
     var currentBuzzObject = null;
-    /**
+    /*
      * @function setSong
      * @desc Stops currently playing song and loads new audio file as currentBuzzObject
      * @param {Object} song
@@ -35,15 +35,21 @@
       });
 
 
-     currentBuzzObject.bind('timeupdate', function() {
-         $rootScope.$apply(function() {
-             SongPlayer.currentTime = currentBuzzObject.getTime();
-         });
-     });
+      currentBuzzObject.bind('timeupdate', function() {
+        $rootScope.$apply(function() {
+          SongPlayer.currentTime = currentBuzzObject.getTime();
+        });
+      });
+
+      currentBuzzObject.bind('volumechange', function() {
+    $rootScope.$apply(function() {
+        SongPlayer.volume = currentBuzzObject.getVolume();
+    });
+})
 
       SongPlayer.currentSong = song;
     };
-    /**
+    /*
      * @function playSong
      * @desc Plays song and sets playing property of song to true
      * @param {Object} song
@@ -75,16 +81,28 @@
      */
     SongPlayer.currentTime = null;
 
-    /**
-* @function setCurrentTime
-* @desc Set current time (in seconds) of currently playing song
-* @param {Number} time
-*/
-SongPlayer.setCurrentTime = function(time) {
-    if (currentBuzzObject) {
+    /*
+     * @function setCurrentTime
+     * @desc Set current time (in seconds) of currently playing song
+     * @param {Number} time
+     */
+    SongPlayer.setCurrentTime = function(time) {
+      if (currentBuzzObject) {
         currentBuzzObject.setTime(time);
-    }
-};
+      }
+    };
+
+    SongPlayer.volume = 100;
+    SongPlayer.maxVolume = 100;
+    /*
+    method to set volume
+    */
+    SongPlayer.setVolume = function(volume) {
+      if (currentBuzzObject) {
+        currentBuzzObject.setVolume(volume);
+
+      }
+    };
     /*
      *@method play
      *@desc checks if song is current song and plays or pauses depending on conditions
@@ -92,19 +110,19 @@ SongPlayer.setCurrentTime = function(time) {
      */
 
     SongPlayer.play = function(song) {
-      if (SongPlayer.currentSong) {
-        stopSong(SongPlayer.currentSong);
-      }
+      //if (SongPlayer.currentSong) {
+      //  stopSong(SongPlayer.currentSong);
+      //}
       song = song || SongPlayer.currentSong;
       if (SongPlayer.currentSong !== song) {
         setSong(song);
-        console.log("song.playing, after setSong " + JSON.stringify(song));
+        //console.log("song.playing, after setSong " + JSON.stringify(song));
         playSong(song);
-        console.log("song.playing, after playSong " + JSON.stringify(song));
+        //console.log("song.playing, after playSong " + JSON.stringify(song));
       } else if (SongPlayer.currentSong === song) {
         if (currentBuzzObject.isPaused()) {
           playSong(song);
-          console.log("song.playing, after playSong " + JSON.stringify(song));
+          //console.log("song.playing, after playSong " + JSON.stringify(song));
         }
       }
     };
@@ -116,10 +134,10 @@ SongPlayer.setCurrentTime = function(time) {
      */
     SongPlayer.pause = function(song) {
       song = song || SongPlayer.currentSong;
-      stopSong(song);
+      //stopSong(song);
 
-      //            currentBuzzObject.pause();
-      //            song.playing = null;
+                 currentBuzzObject.pause();
+                 song.playing = null;
     };
 
     /*
@@ -158,7 +176,7 @@ SongPlayer.setCurrentTime = function(time) {
         playSong(song);
       }
     };
-    
+
     return SongPlayer;
   }
 
